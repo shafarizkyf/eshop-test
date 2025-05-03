@@ -1,5 +1,6 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import CartScreen from 'screens/CartScreen';
 import HomeScreen from 'screens/HomeScreen';
 import ProductsCategoryScreen from 'screens/ProductsCategoryScreen';
 import color from 'styles/color';
@@ -10,6 +11,7 @@ export type RootStackParamList = {
   ProductsCategoryScreen: {
     category: Category;
   };
+  CartScreen: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -32,6 +34,16 @@ const RootNavigation = () => {
       <Stack.Screen
         name="ProductsCategoryScreen"
         component={ProductsCategoryScreen}
+        options={{
+          cardStyle: {
+            paddingTop: insets.top,
+            backgroundColor: color.bgWhite,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="CartScreen"
+        component={CartScreen}
         options={{
           cardStyle: {
             paddingTop: insets.top,

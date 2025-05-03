@@ -4,7 +4,7 @@ import {AppContext} from 'context/AppContext';
 import useProduct from 'hooks/useProduct';
 import {RootStackProps} from 'navigations/type';
 import {useContext, useEffect, useMemo, useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {getProducts} from 'services/product';
 import style from 'styles/style';
 import {Products} from 'types/product';
@@ -26,7 +26,7 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
 
   useEffect(() => {
     getProducts({
-      select: 'title,thumbnail',
+      select: 'title,thumbnail,price',
     }).then(setProducts);
   }, []);
 
@@ -35,9 +35,12 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
       <FlatList
         ListHeaderComponent={
           <View style={style.gap18}>
-            <View style={styles.cartContainer}>
+            <TouchableOpacity
+              style={styles.cartContainer}
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate('CartScreen')}>
               <Text>{cart.length}</Text>
-            </View>
+            </TouchableOpacity>
             <View style={styles.section}>
               <Text style={styles.headerText}>Categories</Text>
               <View style={styles.grid}>

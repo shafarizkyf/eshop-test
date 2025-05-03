@@ -20,11 +20,12 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: color.primary,
     paddingHorizontal: 12,
-    paddingVertical: 10,
-    borderRadius: 20,
+    paddingVertical: 16,
+    borderRadius: 32,
   },
   text: {
     color: '#fff',
+    textAlign: 'center',
   },
 });
 
