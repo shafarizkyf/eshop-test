@@ -36,6 +36,8 @@ export interface Product {
   thumbnail: string;
 }
 
+export type ProductSimple = Pick<Product, 'id' | 'title' | 'thumbnail'>;
+
 export interface Dimensions {
   width: number;
   height: number;

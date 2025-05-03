@@ -1,4 +1,5 @@
 import ProductCard from 'components/ProductCard';
+import useProduct from 'hooks/useProduct';
 import {RootStackProps} from 'navigations/type';
 import {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
@@ -11,14 +12,15 @@ const ProductsCategoryScreen = ({
   navigation,
 }: RootStackProps<'ProductsCategoryScreen'>) => {
   const {category} = route.params;
+
+  const {addToCart} = useProduct();
+
   const [products, setProducts] = useState<Products>({
     limit: 0,
     products: [],
     skip: 0,
     total: 0,
   });
-
-  console.log(products);
 
   useEffect(() => {
     getProductsByCategory(category.slug).then(setProducts);
@@ -39,7 +41,11 @@ const ProductsCategoryScreen = ({
           </View>
         }
         renderItem={({item}) => (
-          <ProductCard text={item.title} thumbnail={item.thumbnail} />
+          <ProductCard
+            text={item.title}
+            thumbnail={item.thumbnail}
+            onAddToCart={() => addToCart(item)}
+          />
         )}
         numColumns={2}
         contentContainerStyle={{gap: 10}}

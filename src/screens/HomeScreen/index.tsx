@@ -1,6 +1,7 @@
 import CategoryCard from 'components/CategoryCard';
 import ProductCard from 'components/ProductCard';
 import {AppContext} from 'context/AppContext';
+import useProduct from 'hooks/useProduct';
 import {RootStackProps} from 'navigations/type';
 import {useContext, useEffect, useMemo, useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
@@ -9,7 +10,8 @@ import style from 'styles/style';
 import {Products} from 'types/product';
 
 const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
-  const {categories} = useContext(AppContext);
+  const {categories, cart} = useContext(AppContext);
+  const {addToCart} = useProduct();
 
   const [products, setProducts] = useState<Products>({
     limit: 0,
@@ -33,6 +35,9 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
       <FlatList
         ListHeaderComponent={
           <View style={style.gap18}>
+            <View style={styles.cartContainer}>
+              <Text>{cart.length}</Text>
+            </View>
             <View style={styles.section}>
               <Text style={styles.headerText}>Categories</Text>
               <View style={styles.grid}>
@@ -55,7 +60,11 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
         keyExtractor={item => `Product-${item.id}`}
         data={products.products}
         renderItem={({item}) => (
-          <ProductCard text={item.title} thumbnail={item.thumbnail} />
+          <ProductCard
+            text={item.title}
+            thumbnail={item.thumbnail}
+            onAddToCart={() => addToCart(item)}
+          />
         )}
         numColumns={2}
         contentContainerStyle={{gap: 10}}
@@ -76,6 +85,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 10,
+  },
+  cartContainer: {
+    width: 40,
+    height: 40,
+    borderRadius: 40 / 2,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
