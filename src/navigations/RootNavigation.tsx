@@ -1,4 +1,5 @@
 import {createStackNavigator} from '@react-navigation/stack';
+import StackHeader from 'components/StackHeader';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import CartScreen from 'screens/CartScreen';
 import HomeScreen from 'screens/HomeScreen';
@@ -20,11 +21,13 @@ const RootNavigation = () => {
   const insets = useSafeAreaInsets();
 
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator
+      screenOptions={{header: props => <StackHeader {...props} />}}>
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
         options={{
+          headerShown: false,
           cardStyle: {
             paddingTop: insets.top,
             backgroundColor: color.bgWhite,
@@ -35,6 +38,7 @@ const RootNavigation = () => {
         name="ProductsCategoryScreen"
         component={ProductsCategoryScreen}
         options={{
+          headerShown: false,
           cardStyle: {
             paddingTop: insets.top,
             backgroundColor: color.bgWhite,
@@ -45,8 +49,8 @@ const RootNavigation = () => {
         name="CartScreen"
         component={CartScreen}
         options={{
+          title: 'Cart',
           cardStyle: {
-            paddingTop: insets.top,
             backgroundColor: color.bgWhite,
           },
         }}
