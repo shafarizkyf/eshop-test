@@ -23,7 +23,9 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
   }, [categories]);
 
   useEffect(() => {
-    getProducts().then(setProducts);
+    getProducts({
+      select: 'title,thumbnail',
+    }).then(setProducts);
   }, []);
 
   return (

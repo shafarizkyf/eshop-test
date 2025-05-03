@@ -10,9 +10,17 @@ export const getProductCategories = async () => {
   }
 };
 
-export const getProducts = async () => {
+type GetProductsRequest = {
+  limit?: number;
+  skip?: number;
+  select?: string;
+};
+
+export const getProducts = async (params?: GetProductsRequest) => {
   try {
-    const response = await eshopApi.get<Products>('/products');
+    const response = await eshopApi.get<Products>('/products', {
+      params,
+    });
     return response.data;
   } catch (error) {
     throw error;
