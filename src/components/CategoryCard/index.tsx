@@ -1,17 +1,18 @@
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 const {width: wWidth} = Dimensions.get('window');
 const CARD_SIZE = wWidth / 3 - 20;
 
 type Props = {
   text: string;
+  onPress: () => void;
 };
 
-const CategoryCard = ({text}: Props) => {
+const CategoryCard = ({text, onPress}: Props) => {
   return (
-    <View style={styles.card}>
+    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.8}>
       <Text style={styles.text}>{text}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -1,15 +1,17 @@
+import {NavigationContainer} from '@react-navigation/native';
 import AppContext from 'context/AppContext';
-import {SafeAreaView} from 'react-native';
-import HomeScreen from 'screens/HomeScreen';
-import color from 'styles/color';
+import RootNavigation from 'navigations/RootNavigation';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 const App = () => {
   return (
-    <SafeAreaView style={{backgroundColor: color.bgWhite, flex: 1}}>
+    <SafeAreaProvider>
       <AppContext>
-        <HomeScreen />
+        <NavigationContainer>
+          <RootNavigation />
+        </NavigationContainer>
       </AppContext>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 

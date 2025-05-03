@@ -30,7 +30,7 @@ export const getProductById = async (id: number) => {
 
 export const getProductsByCategory = async (slug: string) => {
   try {
-    const response = await eshopApi.get<Product>(`/products/category/${slug}`);
+    const response = await eshopApi.get<Products>(`/products/category/${slug}`);
     return response.data;
   } catch (error) {
     throw error;

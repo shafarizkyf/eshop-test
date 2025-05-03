@@ -1,13 +1,14 @@
 import CategoryCard from 'components/CategoryCard';
 import ProductCard from 'components/ProductCard';
 import {AppContext} from 'context/AppContext';
+import {RootStackProps} from 'navigations/type';
 import {useContext, useEffect, useMemo, useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {getProducts} from 'services/product';
 import style from 'styles/style';
 import {Products} from 'types/product';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
   const {categories} = useContext(AppContext);
 
   const [products, setProducts] = useState<Products>({
@@ -18,7 +19,7 @@ const HomeScreen = () => {
   });
 
   const categoriesTrimmed = useMemo(() => {
-    return categories.slice(0, 5);
+    return categories.slice(0, 6);
   }, [categories]);
 
   useEffect(() => {
@@ -34,9 +35,16 @@ const HomeScreen = () => {
               <Text style={styles.headerText}>Categories</Text>
               <View style={styles.grid}>
                 {categoriesTrimmed.map(item => (
-                  <CategoryCard key={item.slug} text={item.name} />
+                  <CategoryCard
+                    key={item.slug}
+                    text={item.name}
+                    onPress={() =>
+                      navigation.navigate('ProductsCategoryScreen', {
+                        category: item,
+                      })
+                    }
+                  />
                 ))}
-                <CategoryCard text="See All" />
               </View>
             </View>
             <Text style={styles.headerText}>Products</Text>
@@ -47,7 +55,7 @@ const HomeScreen = () => {
         renderItem={({item}) => (
           <ProductCard text={item.title} thumbnail={item.thumbnail} />
         )}
-        numColumns={3}
+        numColumns={2}
         contentContainerStyle={{gap: 10}}
       />
     </View>
