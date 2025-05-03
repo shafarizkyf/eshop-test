@@ -1,3 +1,4 @@
+import {PropsWithChildren} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,13 +7,15 @@ import {
 } from 'react-native';
 import color from 'styles/color';
 
-type Props = TouchableOpacityProps & {
-  text: string;
-};
+type Props = TouchableOpacityProps &
+  PropsWithChildren & {
+    text?: string;
+  };
 
-const Button = ({text, ...props}: Props) => (
+const Button = ({text, children, ...props}: Props) => (
   <TouchableOpacity style={styles.button} activeOpacity={0.8} {...props}>
-    <Text style={styles.text}>{text}</Text>
+    {text && <Text style={styles.text}>{text}</Text>}
+    {children}
   </TouchableOpacity>
 );
 

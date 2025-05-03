@@ -1,3 +1,4 @@
+import Icon from '@react-native-vector-icons/ionicons';
 import {StackHeaderProps} from '@react-navigation/stack';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -11,7 +12,7 @@ const StackHeader = ({navigation, options}: StackHeaderProps) => {
         <Text style={styles.text}>{options.title}</Text>
       </View>
       <TouchableOpacity onPress={navigation.goBack}>
-        <Text>back</Text>
+        <Icon name="arrow-back" size={18} />
       </TouchableOpacity>
     </View>
   );
@@ -35,6 +36,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
+    fontWeight: 800,
   },
 });
 

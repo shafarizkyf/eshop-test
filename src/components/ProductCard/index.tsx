@@ -1,6 +1,8 @@
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
 import FastImage from '@d11/react-native-fast-image';
 import Button from 'components/Button';
+import Icon from '@react-native-vector-icons/ionicons';
+import color from 'styles/color';
 
 const {width: wWidth} = Dimensions.get('window');
 const CARD_SIZE = wWidth / 2 - 25;
@@ -18,7 +20,10 @@ const ProductCard = ({text, thumbnail, onAddToCart}: Props) => {
       <Text style={styles.text} numberOfLines={2}>
         {text}
       </Text>
-      <Button text="Add to cart" onPress={onAddToCart} />
+      <Button style={styles.button} onPress={onAddToCart}>
+        <Icon name="cart-outline" size={16} color={color.primary} />
+        <Text style={styles.addToCartText}>Add to cart</Text>
+      </Button>
     </View>
   );
 };
@@ -30,7 +35,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 10,
     backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
     gap: 10,
   },
@@ -41,6 +45,21 @@ const styles = StyleSheet.create({
   image: {
     width: CARD_SIZE,
     height: CARD_SIZE,
+    alignSelf: 'center',
+  },
+  button: {
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: color.primary,
+    alignItems: 'center',
+    gap: 4,
+    justifyContent: 'center',
+    paddingVertical: 8,
+    borderRadius: 10,
+  },
+  addToCartText: {
+    color: color.primary,
+    fontSize: 12,
   },
 });
 

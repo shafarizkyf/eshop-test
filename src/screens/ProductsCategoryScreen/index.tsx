@@ -1,3 +1,4 @@
+import Icon from '@react-native-vector-icons/ionicons';
 import ProductCard from 'components/ProductCard';
 import useProduct from 'hooks/useProduct';
 import {RootStackProps} from 'navigations/type';
@@ -34,7 +35,7 @@ const ProductsCategoryScreen = ({
         ListHeaderComponent={
           <View style={[style.rowBetweenInCenter]}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
-              <Text>Back</Text>
+              <Icon name="arrow-back" size={22} />
             </TouchableOpacity>
 
             <Text style={styles.headerText}>{category.name}</Text>
@@ -48,7 +49,7 @@ const ProductsCategoryScreen = ({
           />
         )}
         numColumns={2}
-        contentContainerStyle={{gap: 10}}
+        contentContainerStyle={style.gap8}
       />
     </View>
   );
