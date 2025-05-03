@@ -8,9 +8,13 @@ import style from 'styles/style';
 const CartScreen = () => {
   const {cart} = useContext(AppContext);
 
-  const total = useMemo(() => {
-    return cart.reduce((a, b) => a + b.price * b.quantity, 0);
+  const selectedCartItems = useMemo(() => {
+    return cart.filter(item => item.selected);
   }, [cart]);
+
+  const total = useMemo(() => {
+    return selectedCartItems.reduce((a, b) => a + b.price * b.quantity, 0);
+  }, [selectedCartItems]);
 
   return (
     <View style={style.flex1}>

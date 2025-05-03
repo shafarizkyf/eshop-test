@@ -14,6 +14,7 @@ const useProduct = () => {
       _cart.push({
         ...product,
         quantity: 1,
+        selected: true,
       });
 
       toast('Added to Cart');
@@ -46,10 +47,21 @@ const useProduct = () => {
     }
   };
 
+  const selectItemFromCart = (productId: number, isSelected: boolean) => {
+    const _cart = [...cart];
+    const index = _cart.findIndex(item => item.id === productId);
+
+    if (index !== -1) {
+      _cart[index].selected = isSelected;
+      setCart(_cart);
+    }
+  };
+
   return {
     addToCart,
     removeFromCart,
     updateProductInCart,
+    selectItemFromCart,
   };
 };
 

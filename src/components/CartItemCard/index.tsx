@@ -1,7 +1,10 @@
 import FastImage from '@d11/react-native-fast-image';
+import Icon from '@react-native-vector-icons/ionicons';
+import Checkbox from 'components/Checkbox';
 import useProduct from 'hooks/useProduct';
 import {useMemo, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import color from 'styles/color';
 import style from 'styles/style';
 
 type Props = {
@@ -13,8 +16,10 @@ type Props = {
 };
 
 const CartItemCard = (props: Props) => {
-  const {removeFromCart, updateProductInCart} = useProduct();
+  const {removeFromCart, updateProductInCart, selectItemFromCart} =
+    useProduct();
   const [quantity, setQuantity] = useState<number>(props.quantity);
+  const [isChecked, setIsChecked] = useState<boolean>(true);
 
   const subTotal = useMemo(() => {
     return (props.price * quantity).toFixed(2);
@@ -30,33 +35,39 @@ const CartItemCard = (props: Props) => {
     }
   };
 
+  const onToggleSelect = () => {
+    setIsChecked(prev => !prev);
+    selectItemFromCart(props.id, !isChecked);
+  };
+
   return (
     <View style={styles.container}>
       <View style={[style.row, style.gap18]}>
+        <Checkbox checked={isChecked} onPress={onToggleSelect} />
         <FastImage source={{uri: props.thumbnail}} style={styles.thumbnail} />
         <View style={[style.flex1, style.gap8]}>
           <Text>{props.title}</Text>
-          <Text>{subTotal}</Text>
+          <Text>{`$${subTotal}`}</Text>
           <View style={style.rowBetweenInCenter}>
             <View style={styles.quantityControlContainer}>
               <TouchableOpacity
                 style={styles.quantityControl}
                 activeOpacity={0.8}
                 onPress={() => onChangeQuantity('substract')}>
-                <Text>-</Text>
+                <Icon name="remove-outline" />
               </TouchableOpacity>
               <Text>{quantity}</Text>
               <TouchableOpacity
                 style={styles.quantityControl}
                 activeOpacity={0.8}
                 onPress={() => onChangeQuantity('add')}>
-                <Text>+</Text>
+                <Icon name="add-outline" />
               </TouchableOpacity>
             </View>
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => removeFromCart(props.id)}>
-              <Text>Remove</Text>
+              <Icon name="trash-outline" color={color.muted} size={16} />
             </TouchableOpacity>
           </View>
         </View>

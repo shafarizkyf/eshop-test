@@ -28,7 +28,7 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
   }, []);
 
   return (
-    <View style={[style.container, style.gap18]}>
+    <View style={[style.flex1, style.gap18]}>
       <FlatList
         ListHeaderComponent={
           <View style={style.gap18}>
@@ -51,6 +51,7 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
         )}
         numColumns={2}
         contentContainerStyle={style.gap8}
+        style={style.ph20}
       />
     </View>
   );
