@@ -1,4 +1,5 @@
-import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
+import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import FastImage from '@d11/react-native-fast-image';
 
 const {width: wWidth} = Dimensions.get('window');
 const CARD_SIZE = wWidth / 2 - 25;
@@ -11,7 +12,7 @@ type Props = {
 const ProductCard = ({text, thumbnail}: Props) => {
   return (
     <View style={styles.card}>
-      <Image source={{uri: thumbnail}} style={styles.image} />
+      <FastImage source={{uri: thumbnail}} style={styles.image} />
       <Text style={styles.text} numberOfLines={2}>
         {text}
       </Text>
