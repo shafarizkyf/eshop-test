@@ -11,7 +11,8 @@ const CartIcon = (props: Props) => (
   <TouchableOpacity
     style={styles.cartContainer}
     activeOpacity={0.8}
-    onPress={props.onPress}>
+    onPress={props.onPress}
+    testID="homeToCartBtn">
     <Icon name="cart-outline" size={18} />
     {!!props.counter && (
       <View style={styles.cartCounter}>

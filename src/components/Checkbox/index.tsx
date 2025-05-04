@@ -1,10 +1,13 @@
 import Icon from '@react-native-vector-icons/ionicons';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  TouchableOpacity,
+  TouchableOpacityProps,
+} from 'react-native';
 import color from 'styles/color';
 
-type Props = {
+type Props = TouchableOpacityProps & {
   checked: boolean;
-  onPress: () => void;
 };
 
 const Checkbox = (props: Props) => {
@@ -12,7 +15,7 @@ const Checkbox = (props: Props) => {
     <TouchableOpacity
       style={[styles.container, props.checked ? styles.active : {}]}
       activeOpacity={0.8}
-      onPress={props.onPress}>
+      {...props}>
       {props.checked && <Icon name="checkmark" color="#fff" />}
     </TouchableOpacity>
   );

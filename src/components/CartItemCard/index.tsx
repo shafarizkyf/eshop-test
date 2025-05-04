@@ -43,7 +43,11 @@ const CartItemCard = (props: Props) => {
   return (
     <View style={styles.container}>
       <View style={[style.row, style.gap18]}>
-        <Checkbox checked={isChecked} onPress={onToggleSelect} />
+        <Checkbox
+          checked={isChecked}
+          onPress={onToggleSelect}
+          testID={`Checkbox-${props.title.replace(/\s/, '')}`}
+        />
         <FastImage source={{uri: props.thumbnail}} style={styles.thumbnail} />
         <View style={[style.flex1, style.gap8]}>
           <Text>{props.title}</Text>
@@ -53,14 +57,16 @@ const CartItemCard = (props: Props) => {
               <TouchableOpacity
                 style={styles.quantityControl}
                 activeOpacity={0.8}
-                onPress={() => onChangeQuantity('substract')}>
+                onPress={() => onChangeQuantity('substract')}
+                testID={`substractQtyBtn-${props.title.replace(/\s/, '')}`}>
                 <Icon name="remove-outline" />
               </TouchableOpacity>
               <Text>{quantity}</Text>
               <TouchableOpacity
                 style={styles.quantityControl}
                 activeOpacity={0.8}
-                onPress={() => onChangeQuantity('add')}>
+                onPress={() => onChangeQuantity('add')}
+                testID={`addQtyBtn-${props.title.replace(/\s/, '')}`}>
                 <Icon name="add-outline" />
               </TouchableOpacity>
             </View>

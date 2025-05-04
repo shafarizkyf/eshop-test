@@ -36,14 +36,18 @@ const ProductCard = ({
       <Text style={styles.text} numberOfLines={2}>
         {text}
       </Text>
-      <Button style={styles.button} onPress={onAddToCart}>
+      <Button
+        style={styles.button}
+        onPress={onAddToCart}
+        testID={`addToCartBtn-${text.replace(/\s/, '')}`}>
         <Icon name="cart-outline" size={16} color={color.primary} />
         <Text style={styles.addToCartText}>Add to cart</Text>
       </Button>
       <TouchableOpacity
         style={styles.heartIcon}
         activeOpacity={0.8}
-        onPress={onToggleFavorite}>
+        onPress={onToggleFavorite}
+        testID={`favoriteBtn-${text.replace(/\s/, '')}`}>
         <Icon
           name={isFavorite ? 'heart' : 'heart-outline'}
           size={18}
