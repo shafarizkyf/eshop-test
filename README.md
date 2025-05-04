@@ -2,6 +2,10 @@
 
 This projects utilize `https://dummyjson.com/docs/products` API.
 
+### Demo (E2E Testing)
+
+[![Demo Video](https://www.youtube.com/watch?v=xIZs3EyCqYM)](https://www.youtube.com/watch?v=xIZs3EyCqYM)
+
 ### Environment
 
 - Node v20.15.9
