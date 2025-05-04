@@ -1,6 +1,7 @@
 import Icon from '@react-native-vector-icons/ionicons';
+import RenderIf from 'components/RenderIf';
 import {useEffect, useState} from 'react';
-import {StyleSheet, TextInput, View} from 'react-native';
+import {StyleSheet, TextInput, TouchableOpacity, View} from 'react-native';
 import color from 'styles/color';
 
 type Props = {
@@ -27,7 +28,13 @@ const SearchBar = (props: Props) => {
         placeholderTextColor={color.muted}
         value={keyword}
         onChangeText={setKeyword}
+        testID="searchBar"
       />
+      <RenderIf isTrue={Boolean(keyword.length)}>
+        <TouchableOpacity onPress={() => setKeyword('')}>
+          <Icon name="close" />
+        </TouchableOpacity>
+      </RenderIf>
     </View>
   );
 };
@@ -37,6 +44,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: '#fff',
     flexDirection: 'row',
+    alignItems: 'center',
     gap: 8,
     paddingHorizontal: 12,
     flex: 1,
