@@ -2,6 +2,7 @@ import {AppContext} from 'context/AppContext';
 import {useContext} from 'react';
 import {ProductSimple} from 'types/product';
 import {toast} from 'utils/feature';
+import {saveObject} from 'utils/storage';
 
 const useProduct = () => {
   const {cart, setCart, favorites, setFavorites} = useContext(AppContext);
@@ -21,6 +22,7 @@ const useProduct = () => {
       toast('Removed from favorite');
     }
 
+    saveObject('FAVORITE_PRODUCTS', _favorites);
     setFavorites(_favorites);
   };
 
@@ -42,6 +44,7 @@ const useProduct = () => {
       toast('Cart Updated');
     }
 
+    saveObject('CART', _cart);
     setCart(_cart);
   };
 
