@@ -1,0 +1,52 @@
+appId: com.shafarizkyf.eshoptest
+---
+- launchApp
+- tapOn:
+    id: 'homeToCartBtn' # go to cart screen from home screen
+- tapOn:
+    id: 'stackHeaderBackBtn' # back from cart screen to home screen
+- tapOn:
+    id: 'category-beauty'
+- tapOn:
+    id: 'productsCategoryBackBtn' # back from products by category to home screen
+- tapOn:
+    id: 'favoriteBtn-PowderCanister' # toggle fav product from home screen
+- scrollUntilVisible:
+    element:
+      id: 'addToCartBtn-CatFood' # scroll look for product
+    timeout: 50000
+    speed: 80
+- tapOn:
+    id: 'addToCartBtn-CatFood' # add to cart product from home scree
+- tapOn:
+    id: 'searchBar'
+- inputText:
+    text: 'chicken' # search product
+- pressKey: Enter
+- tapOn:
+    id: 'ProductCard-ChickenMeat' # tap search result
+- tapOn:
+    id: 'productDetailFavoriteBtn' # toogle fav product from product detail
+- tapOn:
+    id: 'productDetailToCartBtn' # to cart screen from product detail
+- tapOn:
+    id: 'stackHeaderBackBtn' # back to product detail from cart screen
+- tapOn: 'Add to cart'
+- tapOn:
+    id: 'productDetailToCartBtn' # add to cart from product detail
+- repeat:
+    times: 3
+    commands:
+      - tapOn:
+          id: 'addQtyBtn-CatFood' # add quantity
+- repeat:
+    times: 2
+    commands:
+      - tapOn:
+          id: 'addQtyBtn-ChickenMeat' # add quantity
+- tapOn:
+    id: 'substractQtyBtn-CatFood' # substract quantity
+- tapOn:
+    id: 'Checkbox-CatFood' # substract quantity
+- tapOn:
+    id: 'checkoutBtn'
