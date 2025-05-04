@@ -98,18 +98,20 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
           />
         )}
         ListEmptyComponent={
-          <View style={styles.shimmerContainer}>
-            {Array(8)
-              .fill('')
-              .map((_, i) => (
-                <ShimmerPlaceholder
-                  key={`ShimmerPlaceholder-${i}`}
-                  width={PRODUCT_CARD_SIZE}
-                  height={PRODUCT_CARD_SIZE * 2}
-                  borderRadius={10}
-                />
-              ))}
-          </View>
+          <RenderIf isTrue={isLoading}>
+            <View style={styles.shimmerContainer}>
+              {Array(8)
+                .fill('')
+                .map((_, i) => (
+                  <ShimmerPlaceholder
+                    key={`ShimmerPlaceholder-${i}`}
+                    width={PRODUCT_CARD_SIZE}
+                    height={PRODUCT_CARD_SIZE * 2}
+                    borderRadius={10}
+                  />
+                ))}
+            </View>
+          </RenderIf>
         }
         numColumns={2}
         contentContainerStyle={style.gap8}
