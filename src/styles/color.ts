@@ -4,4 +4,5 @@ export default {
   danger: 'red',
   muted: '#919191',
   favorite: '#FE6E6A',
+  reviewStar: '#eb932f',
 };

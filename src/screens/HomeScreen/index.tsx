@@ -71,6 +71,7 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
             onAddToCart={() => addToCart(item)}
             onToggleFavorite={() => toggleFavorite(item)}
             isFavorite={favorites.find(f => f.id === item.id) !== undefined}
+            onPress={() => navigation.navigate('ProductDetailScreen', item)}
           />
         )}
         numColumns={2}

@@ -325,6 +325,9 @@ export default StyleSheet.create({
     zIndex: 1,
     top: -10000,
   },
+  gap4: {
+    gap: 4,
+  },
   gap8: {
     gap: 8,
   },

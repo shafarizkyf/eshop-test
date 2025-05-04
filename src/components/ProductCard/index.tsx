@@ -1,10 +1,4 @@
-import {
-  Dimensions,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Dimensions, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import FastImage from '@d11/react-native-fast-image';
 import Button from 'components/Button';
 import Icon from '@react-native-vector-icons/ionicons';
@@ -16,6 +10,7 @@ const CARD_SIZE = wWidth / 2 - 25;
 type Props = {
   text: string;
   thumbnail: string;
+  onPress: () => void;
   onAddToCart: () => void;
   onToggleFavorite: () => void;
   isFavorite: boolean;
@@ -24,13 +19,18 @@ type Props = {
 const ProductCard = ({
   text,
   thumbnail,
+  onPress,
   onAddToCart,
   onToggleFavorite,
   isFavorite,
 }: Props) => {
   return (
-    <View style={styles.card}>
-      <FastImage source={{uri: thumbnail}} style={styles.image} />
+    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.8}>
+      <FastImage
+        source={{uri: thumbnail}}
+        style={styles.image}
+        resizeMode="contain"
+      />
       <Text style={styles.text} numberOfLines={2}>
         {text}
       </Text>
@@ -48,7 +48,7 @@ const ProductCard = ({
           color={isFavorite ? color.favorite : '#000'}
         />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 };
 

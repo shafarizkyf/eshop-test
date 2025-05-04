@@ -3,9 +3,10 @@ import StackHeader from 'components/StackHeader';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import CartScreen from 'screens/CartScreen';
 import HomeScreen from 'screens/HomeScreen';
+import ProductDetailScreen from 'screens/ProductDetailScreen';
 import ProductsCategoryScreen from 'screens/ProductsCategoryScreen';
 import color from 'styles/color';
-import {Category} from 'types/product';
+import {Category, ProductSimple} from 'types/product';
 
 export type RootStackParamList = {
   HomeScreen: undefined;
@@ -13,6 +14,7 @@ export type RootStackParamList = {
     category: Category;
   };
   CartScreen: undefined;
+  ProductDetailScreen: ProductSimple;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -50,6 +52,15 @@ const RootNavigation = () => {
         component={CartScreen}
         options={{
           title: 'Cart',
+          cardStyle: {
+            backgroundColor: color.bgWhite,
+          },
+        }}
+      />
+      <Stack.Screen
+        name="ProductDetailScreen"
+        component={ProductDetailScreen}
+        options={{
           cardStyle: {
             backgroundColor: color.bgWhite,
           },
