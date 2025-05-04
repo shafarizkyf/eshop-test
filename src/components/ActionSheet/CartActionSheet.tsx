@@ -38,7 +38,7 @@ const CartActionSheet = ({sheetId, payload}: SheetProps<'cart-sheet'>) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: wHeight * 0.8,
+    height: wHeight * 0.6,
     padding: 20,
   },
   footer: {
