@@ -36,7 +36,7 @@ const ProductsCategoryScreen = ({
   }, [category.slug]);
 
   return (
-    <View style={style.container}>
+    <View style={[style.flex1]}>
       <FlatList
         data={products.products}
         keyExtractor={item => item.id + item.title}
@@ -79,6 +79,7 @@ const ProductsCategoryScreen = ({
         }
         numColumns={2}
         contentContainerStyle={style.gap8}
+        style={style.p20}
       />
     </View>
   );

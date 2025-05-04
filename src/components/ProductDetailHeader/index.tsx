@@ -19,7 +19,7 @@ const ProductDetailHeader = ({
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.container, {paddingTop: insets.top}]}>
+    <View style={[styles.container, {paddingTop: insets.top + 20}]}>
       <View style={style.row}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}

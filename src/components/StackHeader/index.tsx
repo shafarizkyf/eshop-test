@@ -7,7 +7,7 @@ const StackHeader = ({navigation, options}: StackHeaderProps) => {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={[styles.container, {paddingTop: insets.top}]}>
+    <View style={[styles.container, {paddingTop: insets.top + 20}]}>
       <View style={styles.titleContainer}>
         <Text style={styles.text}>{options.title}</Text>
       </View>
