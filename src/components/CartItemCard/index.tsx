@@ -3,7 +3,7 @@ import Icon from '@react-native-vector-icons/ionicons';
 import Checkbox from 'components/Checkbox';
 import useProduct from 'hooks/useProduct';
 import {useMemo, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import color from 'styles/color';
 import style from 'styles/style';
 
@@ -40,6 +40,24 @@ const CartItemCard = (props: Props) => {
     selectItemFromCart(props.id, !isChecked);
   };
 
+  const onRemove = () => {
+    Alert.alert(
+      'Are you sure?',
+      `You are going to remove ${props.title} from the cart`,
+      [
+        {
+          text: 'Yes',
+          onPress: () => removeFromCart(props.id),
+          style: 'destructive',
+        },
+        {
+          text: 'Cancel',
+          isPreferred: true,
+        },
+      ],
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={[style.row, style.gap18]}>
@@ -70,9 +88,7 @@ const CartItemCard = (props: Props) => {
                 <Icon name="add-outline" />
               </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => removeFromCart(props.id)}>
+            <TouchableOpacity activeOpacity={0.8} onPress={onRemove}>
               <Icon name="trash-outline" color={color.muted} size={16} />
             </TouchableOpacity>
           </View>
