@@ -1,7 +1,5 @@
-import {Dimensions, StyleSheet, Text, TouchableOpacity} from 'react-native';
-
-const {width: wWidth} = Dimensions.get('window');
-const CARD_SIZE = wWidth / 3 - 20;
+import {CATEGORY_CARD_SIZE} from 'constant/card';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 
 type Props = {
   text: string;
@@ -18,8 +16,8 @@ const CategoryCard = ({text, onPress}: Props) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: CARD_SIZE,
-    height: CARD_SIZE,
+    width: CATEGORY_CARD_SIZE,
+    height: CATEGORY_CARD_SIZE / 2,
     padding: 10,
     borderRadius: 10,
     backgroundColor: '#fff',

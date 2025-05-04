@@ -1,11 +1,9 @@
-import {Dimensions, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import FastImage from '@d11/react-native-fast-image';
 import Button from 'components/Button';
 import Icon from '@react-native-vector-icons/ionicons';
 import color from 'styles/color';
-
-const {width: wWidth} = Dimensions.get('window');
-const CARD_SIZE = wWidth / 2 - 25;
+import {PRODUCT_CARD_SIZE} from 'constant/card';
 
 type Props = {
   text: string;
@@ -54,7 +52,7 @@ const ProductCard = ({
 
 const styles = StyleSheet.create({
   card: {
-    width: CARD_SIZE,
+    width: PRODUCT_CARD_SIZE,
     padding: 10,
     marginRight: 10,
     borderRadius: 10,
@@ -67,8 +65,8 @@ const styles = StyleSheet.create({
     fontWeight: 600,
   },
   image: {
-    width: CARD_SIZE,
-    height: CARD_SIZE,
+    width: PRODUCT_CARD_SIZE,
+    height: PRODUCT_CARD_SIZE,
     alignSelf: 'center',
   },
   button: {

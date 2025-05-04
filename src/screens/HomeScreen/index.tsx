@@ -3,13 +3,16 @@ import {AppContext} from 'context/AppContext';
 import useProduct from 'hooks/useProduct';
 import {RootStackProps} from 'navigations/type';
 import {useContext, useEffect, useState} from 'react';
-import {FlatList, Text, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {getProducts, searchProducts} from 'services/product';
 import style from 'styles/style';
 import {Products} from 'types/product';
 import CartIcon from './CartIcon';
 import CategoriesSection from './CategoriesSection';
 import SearchBar from './SearchBar';
+import {ShimmerPlaceholder} from 'components/ShimmerPlaceholder';
+import {CATEGORY_CARD_SIZE, PRODUCT_CARD_SIZE} from 'constant/card';
+import RenderIf from 'components/RenderIf';
 
 const INIT_PRODUCTS: Products = {
   limit: 0,
@@ -19,8 +22,9 @@ const INIT_PRODUCTS: Products = {
 };
 
 const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
-  const {cart, favorites} = useContext(AppContext);
+  const {cart, categories, favorites} = useContext(AppContext);
   const {addToCart, toggleFavorite} = useProduct();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [products, setProducts] = useState<Products>(INIT_PRODUCTS);
   const [productsByKeyword, setProductsByKeyword] =
@@ -37,9 +41,12 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
   };
 
   useEffect(() => {
+    setIsLoading(true);
     getProducts({
       select: 'title,thumbnail,price',
-    }).then(setProducts);
+    })
+      .then(setProducts)
+      .finally(() => setIsLoading(false));
   }, []);
 
   return (
@@ -54,7 +61,23 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
                 onPress={() => navigation.navigate('CartScreen')}
               />
             </View>
-            <CategoriesSection />
+            <RenderIf isTrue={Boolean(categories.length)}>
+              <CategoriesSection />
+            </RenderIf>
+            <RenderIf isTrue={!categories.length}>
+              <View style={styles.shimmerContainer}>
+                {Array(8)
+                  .fill('')
+                  .map((_, i) => (
+                    <ShimmerPlaceholder
+                      key={`ShimmerPlaceholder-${i}`}
+                      width={CATEGORY_CARD_SIZE}
+                      height={CATEGORY_CARD_SIZE / 2}
+                      borderRadius={10}
+                    />
+                  ))}
+              </View>
+            </RenderIf>
             <Text style={style.headerText}>Products</Text>
           </View>
         }
@@ -74,6 +97,20 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
             onPress={() => navigation.navigate('ProductDetailScreen', item)}
           />
         )}
+        ListEmptyComponent={
+          <View style={styles.shimmerContainer}>
+            {Array(8)
+              .fill('')
+              .map((_, i) => (
+                <ShimmerPlaceholder
+                  key={`ShimmerPlaceholder-${i}`}
+                  width={PRODUCT_CARD_SIZE}
+                  height={PRODUCT_CARD_SIZE * 2}
+                  borderRadius={10}
+                />
+              ))}
+          </View>
+        }
         numColumns={2}
         contentContainerStyle={style.gap8}
         style={style.ph20}
@@ -81,5 +118,13 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  shimmerContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+});
 
 export default HomeScreen;
