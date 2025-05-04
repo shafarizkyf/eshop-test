@@ -35,7 +35,7 @@ const CategoriesSection = () => {
 
 const styles = StyleSheet.create({
   section: {
-    gap: 18,
+    gap: 8,
   },
   scrollH: {
     gap: 8,
