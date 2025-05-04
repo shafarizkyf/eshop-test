@@ -4,7 +4,25 @@ import {ProductSimple} from 'types/product';
 import {toast} from 'utils/feature';
 
 const useProduct = () => {
-  const {cart, setCart} = useContext(AppContext);
+  const {cart, setCart, favorites, setFavorites} = useContext(AppContext);
+
+  const toggleFavorite = (product: ProductSimple) => {
+    const _favorites = [...favorites];
+    const index = _favorites.findIndex(item => item.id === product.id);
+
+    if (index === -1) {
+      _favorites.push({
+        ...product,
+      });
+
+      toast('Added to favorite');
+    } else {
+      _favorites.splice(index, 1);
+      toast('Removed from favorite');
+    }
+
+    setFavorites(_favorites);
+  };
 
   const addToCart = (product: ProductSimple) => {
     const _cart = [...cart];
@@ -62,6 +80,7 @@ const useProduct = () => {
     removeFromCart,
     updateProductInCart,
     selectItemFromCart,
+    toggleFavorite,
   };
 };
 

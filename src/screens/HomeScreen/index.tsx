@@ -19,8 +19,8 @@ const INIT_PRODUCTS: Products = {
 };
 
 const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
-  const {cart} = useContext(AppContext);
-  const {addToCart} = useProduct();
+  const {cart, favorites} = useContext(AppContext);
+  const {addToCart, toggleFavorite} = useProduct();
 
   const [products, setProducts] = useState<Products>(INIT_PRODUCTS);
   const [productsByKeyword, setProductsByKeyword] =
@@ -69,6 +69,8 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
             text={item.title}
             thumbnail={item.thumbnail}
             onAddToCart={() => addToCart(item)}
+            onToggleFavorite={() => toggleFavorite(item)}
+            isFavorite={favorites.find(f => f.id === item.id) !== undefined}
           />
         )}
         numColumns={2}

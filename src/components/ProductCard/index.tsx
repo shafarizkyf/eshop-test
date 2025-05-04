@@ -1,4 +1,10 @@
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import FastImage from '@d11/react-native-fast-image';
 import Button from 'components/Button';
 import Icon from '@react-native-vector-icons/ionicons';
@@ -11,9 +17,17 @@ type Props = {
   text: string;
   thumbnail: string;
   onAddToCart: () => void;
+  onToggleFavorite: () => void;
+  isFavorite: boolean;
 };
 
-const ProductCard = ({text, thumbnail, onAddToCart}: Props) => {
+const ProductCard = ({
+  text,
+  thumbnail,
+  onAddToCart,
+  onToggleFavorite,
+  isFavorite,
+}: Props) => {
   return (
     <View style={styles.card}>
       <FastImage source={{uri: thumbnail}} style={styles.image} />
@@ -24,6 +38,16 @@ const ProductCard = ({text, thumbnail, onAddToCart}: Props) => {
         <Icon name="cart-outline" size={16} color={color.primary} />
         <Text style={styles.addToCartText}>Add to cart</Text>
       </Button>
+      <TouchableOpacity
+        style={styles.heartIcon}
+        activeOpacity={0.8}
+        onPress={onToggleFavorite}>
+        <Icon
+          name={isFavorite ? 'heart' : 'heart-outline'}
+          size={18}
+          color={isFavorite ? color.favorite : '#000'}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -60,6 +84,12 @@ const styles = StyleSheet.create({
   addToCartText: {
     color: color.primary,
     fontSize: 12,
+  },
+  heartIcon: {
+    backgroundColor: '#fff',
+    position: 'absolute',
+    top: 10,
+    right: 20,
   },
 });
 
