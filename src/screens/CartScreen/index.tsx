@@ -7,6 +7,7 @@ import {useContext, useMemo} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {SheetManager} from 'react-native-actions-sheet';
 import style from 'styles/style';
+import {toast} from 'utils/feature';
 
 const CartScreen = () => {
   const {cart} = useContext(AppContext);
@@ -20,6 +21,11 @@ const CartScreen = () => {
   }, [selectedCartItems]);
 
   const onCheckout = () => {
+    if (!selectedCartItems.length) {
+      toast('You dont have any cart items selected');
+      return;
+    }
+
     SheetManager.show('cart-sheet', {
       payload: {
         cart: selectedCartItems,
@@ -58,15 +64,17 @@ const CartScreen = () => {
       <RenderIf isTrue={Boolean(cart.length)}>
         <View style={styles.footer}>
           <View style={style.rowBetweenInCenter}>
-            <Text>Total</Text>
+            <Text>
+              Total{' '}
+              {selectedCartItems.length
+                ? `(${selectedCartItems.length} Item${
+                    selectedCartItems.length > 1 ? 's' : ''
+                  })`
+                : ''}
+            </Text>
             <Text style={styles.total}>{'$' + total.toFixed(2)}</Text>
           </View>
-          <Button
-            text="Checkout"
-            onPress={onCheckout}
-            disabled={!selectedCartItems.length}
-            testID="checkoutBtn"
-          />
+          <Button text="Checkout" onPress={onCheckout} testID="checkoutBtn" />
         </View>
       </RenderIf>
     </View>

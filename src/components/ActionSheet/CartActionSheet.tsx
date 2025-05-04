@@ -21,6 +21,8 @@ const CartActionSheet = ({sheetId, payload}: SheetProps<'cart-sheet'>) => {
             key={item.id + item.title}
             title={item.title}
             thumbnail={item.thumbnail}
+            price={item.price}
+            quantity={item.quantity}
             subtotal={(item.price * item.quantity).toFixed(2)}
           />
         )}

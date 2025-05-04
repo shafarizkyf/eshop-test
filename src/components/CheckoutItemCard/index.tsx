@@ -7,17 +7,27 @@ type Props = {
   title: string;
   thumbnail: string;
   subtotal: number | string;
+  price: number;
+  quantity: number;
 };
 
 const CheckoutItemCard = (props: Props) => (
   <View style={styles.container}>
     <View style={[style.row, style.gap18]}>
       <FastImage source={{uri: props.thumbnail}} style={styles.thumbnail} />
-      <View style={styles.info}>
-        <View style={[style.flex1]}>
-          <Text numberOfLines={1}>{props.title}</Text>
+      <View style={style.flex1}>
+        <View style={styles.info}>
+          <View style={[style.flex1]}>
+            <Text numberOfLines={1}>{props.title}</Text>
+          </View>
+          <Text style={style.f12}>{`$${props.price}`}</Text>
         </View>
-        <Text>{`$${props.subtotal}`}</Text>
+        <View style={styles.info}>
+          <View style={[style.flex1]}>
+            <Text numberOfLines={1}>{`Qty: ${props.quantity}`}</Text>
+          </View>
+          <Text>{`$${props.subtotal}`}</Text>
+        </View>
       </View>
     </View>
   </View>
