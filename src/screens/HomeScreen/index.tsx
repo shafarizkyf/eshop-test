@@ -61,7 +61,10 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
       <FlatList
         ListHeaderComponent={
           <View style={style.gap18}>
-            <RenderIf isTrue={Boolean(categories.length)}>
+            <RenderIf
+              isTrue={
+                Boolean(categories.length) && !productsByKeyword.products.length
+              }>
               <CategoriesSection />
             </RenderIf>
             <RenderIf isTrue={!categories.length}>
@@ -78,7 +81,9 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
                   ))}
               </View>
             </RenderIf>
-            <Text style={style.headerText}>Products</Text>
+            <RenderIf isTrue={!productsByKeyword.products.length}>
+              <Text style={style.headerText}>Products</Text>
+            </RenderIf>
           </View>
         }
         keyExtractor={item => `Product-${item.id}`}

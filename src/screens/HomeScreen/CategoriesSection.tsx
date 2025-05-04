@@ -2,7 +2,7 @@ import CategoryCard from 'components/CategoryCard';
 import {AppContext} from 'context/AppContext';
 import {navigationRef} from 'navigations/NavigationRef';
 import {useContext, useMemo} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import style from 'styles/style';
 
 const CategoriesSection = () => {
@@ -15,7 +15,10 @@ const CategoriesSection = () => {
   return (
     <View style={styles.section}>
       <Text style={style.headerText}>Categories</Text>
-      <View style={styles.grid}>
+      <ScrollView
+        contentContainerStyle={styles.scrollH}
+        horizontal
+        showsHorizontalScrollIndicator={false}>
         {categoriesTrimmed.map(item => (
           <CategoryCard
             key={item.slug}
@@ -25,7 +28,7 @@ const CategoriesSection = () => {
             }
           />
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -33,6 +36,9 @@ const CategoriesSection = () => {
 const styles = StyleSheet.create({
   section: {
     gap: 18,
+  },
+  scrollH: {
+    gap: 8,
   },
   grid: {
     flexDirection: 'row',
