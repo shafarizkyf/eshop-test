@@ -263,6 +263,7 @@
 				DEVELOPMENT_TEAM = 4Q9CZZ68FR;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = EshopTest/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShopFun;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -291,6 +292,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4Q9CZZ68FR;
 				INFOPLIST_FILE = EshopTest/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = ShopFun;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
