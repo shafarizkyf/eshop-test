@@ -11,7 +11,7 @@ const StackHeader = ({navigation, options}: StackHeaderProps) => {
       <View style={styles.titleContainer}>
         <Text style={styles.text}>{options.title}</Text>
       </View>
-      <TouchableOpacity onPress={navigation.goBack}>
+      <TouchableOpacity onPress={navigation.goBack} testID="stackHeaderBackBtn">
         <Icon name="arrow-back" size={18} />
       </TouchableOpacity>
     </View>

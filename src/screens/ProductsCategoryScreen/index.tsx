@@ -42,7 +42,9 @@ const ProductsCategoryScreen = ({
         keyExtractor={item => item.id + item.title}
         ListHeaderComponent={
           <View style={[style.rowBetweenInCenter]}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity
+              onPress={() => navigation.goBack()}
+              testID="productsCategoryBackBtn">
               <Icon name="arrow-back" size={22} />
             </TouchableOpacity>
 

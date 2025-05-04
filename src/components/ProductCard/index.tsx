@@ -23,7 +23,11 @@ const ProductCard = ({
   isFavorite,
 }: Props) => {
   return (
-    <TouchableOpacity style={styles.card} onPress={onPress} activeOpacity={0.8}>
+    <TouchableOpacity
+      style={styles.card}
+      onPress={onPress}
+      activeOpacity={0.8}
+      testID={`ProductCard-${text.replace(/\s/, '')}`}>
       <FastImage
         source={{uri: thumbnail}}
         style={styles.image}

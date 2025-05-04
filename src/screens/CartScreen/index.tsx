@@ -65,6 +65,7 @@ const CartScreen = () => {
             text="Checkout"
             onPress={onCheckout}
             disabled={!selectedCartItems.length}
+            testID="checkoutBtn"
           />
         </View>
       </RenderIf>

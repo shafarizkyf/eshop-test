@@ -21,12 +21,17 @@ const ProductDetailHeader = ({
   return (
     <View style={[styles.container, {paddingTop: insets.top}]}>
       <View style={style.row}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          testID="productDetailBackBtn">
           <Icon name="arrow-back" size={18} />
         </TouchableOpacity>
         <View style={style.flex1} />
         <View style={[styles.icons]}>
-          <TouchableOpacity style={styles.icon} onPress={toggleFavorite}>
+          <TouchableOpacity
+            style={styles.icon}
+            onPress={toggleFavorite}
+            testID="productDetailFavoriteBtn">
             <Icon
               name={isFavorite ? 'heart' : 'heart-outline'}
               size={16}
@@ -35,7 +40,8 @@ const ProductDetailHeader = ({
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.icon}
-            onPress={() => navigationRef.navigate('CartScreen')}>
+            onPress={() => navigationRef.navigate('CartScreen')}
+            testID="productDetailToCartBtn">
             <Icon name="cart-outline" size={16} />
           </TouchableOpacity>
         </View>
