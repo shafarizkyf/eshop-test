@@ -54,6 +54,7 @@ const useProduct = () => {
 
     if (index !== -1) {
       _cart[index].quantity = quantity;
+      saveObject('CART', _cart);
       setCart(_cart);
     }
   };
@@ -64,6 +65,7 @@ const useProduct = () => {
 
     if (index !== -1) {
       _cart.splice(index, 1);
+      saveObject('CART', _cart);
       setCart(_cart);
     }
   };

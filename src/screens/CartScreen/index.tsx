@@ -1,6 +1,8 @@
 import Button from 'components/Button';
 import CartItemCard from 'components/CartItemCard';
+import RenderIf from 'components/RenderIf';
 import {AppContext} from 'context/AppContext';
+import LottieView from 'lottie-react-native';
 import {useContext, useMemo} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {SheetManager} from 'react-native-actions-sheet';
@@ -41,20 +43,31 @@ const CartScreen = () => {
           />
         )}
         contentContainerStyle={style.gap18}
-        ListEmptyComponent={<Text>Empty Cart</Text>}
+        ListEmptyComponent={
+          <View style={style.alignItemsCenter}>
+            <LottieView
+              source={require('@lottie/think-emoji.json')}
+              style={styles.empty}
+              autoPlay
+            />
+            <Text style={style.f24}>Cart Empty</Text>
+          </View>
+        }
         style={style.ph20}
       />
-      <View style={styles.footer}>
-        <View style={style.rowBetweenInCenter}>
-          <Text>Total</Text>
-          <Text style={styles.total}>{'$' + total.toFixed(2)}</Text>
+      <RenderIf isTrue={Boolean(cart.length)}>
+        <View style={styles.footer}>
+          <View style={style.rowBetweenInCenter}>
+            <Text>Total</Text>
+            <Text style={styles.total}>{'$' + total.toFixed(2)}</Text>
+          </View>
+          <Button
+            text="Checkout"
+            onPress={onCheckout}
+            disabled={!selectedCartItems.length}
+          />
         </View>
-        <Button
-          text="Checkout"
-          onPress={onCheckout}
-          disabled={!selectedCartItems.length}
-        />
-      </View>
+      </RenderIf>
     </View>
   );
 };
@@ -70,6 +83,10 @@ const styles = StyleSheet.create({
   total: {
     fontWeight: 600,
     fontSize: 18,
+  },
+  empty: {
+    width: 250,
+    height: 250,
   },
 });
 
