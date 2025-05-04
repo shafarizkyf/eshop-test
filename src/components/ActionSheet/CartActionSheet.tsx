@@ -3,6 +3,7 @@ import BaseActionSheet from './BaseActionSheet';
 import {Dimensions, FlatList, StyleSheet, Text, View} from 'react-native';
 import CheckoutItemCard from 'components/CheckoutItemCard';
 import color from 'styles/color';
+import style from 'styles/style';
 
 const {height: wHeight} = Dimensions.get('window');
 
@@ -12,7 +13,9 @@ const CartActionSheet = ({sheetId, payload}: SheetProps<'cart-sheet'>) => {
       <FlatList
         keyExtractor={item => item.id + item.title}
         data={payload?.cart || []}
-        ListHeaderComponent={<Text style={styles.headerText}>Checkout</Text>}
+        ListHeaderComponent={
+          <Text style={[style.headerText, style.mb20]}>Checkout</Text>
+        }
         renderItem={({item}) => (
           <CheckoutItemCard
             key={item.id + item.title}
@@ -37,11 +40,6 @@ const styles = StyleSheet.create({
   container: {
     height: wHeight * 0.8,
     padding: 20,
-  },
-  headerText: {
-    fontSize: 20,
-    fontWeight: 800,
-    marginBottom: 10,
   },
   footer: {
     marginHorizontal: 20,

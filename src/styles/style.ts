@@ -331,4 +331,8 @@ export default StyleSheet.create({
   gap18: {
     gap: 18,
   },
+  headerText: {
+    fontSize: 18,
+    fontWeight: 600,
+  },
 });

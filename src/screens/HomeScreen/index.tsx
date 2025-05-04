@@ -3,7 +3,7 @@ import {AppContext} from 'context/AppContext';
 import useProduct from 'hooks/useProduct';
 import {RootStackProps} from 'navigations/type';
 import {useContext, useEffect, useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import {getProducts, searchProducts} from 'services/product';
 import style from 'styles/style';
 import {Products} from 'types/product';
@@ -55,7 +55,7 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
               />
             </View>
             <CategoriesSection />
-            <Text style={styles.headerText}>Products</Text>
+            <Text style={style.headerText}>Products</Text>
           </View>
         }
         keyExtractor={item => `Product-${item.id}`}
@@ -80,12 +80,5 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  headerText: {
-    fontSize: 28,
-    fontWeight: 800,
-  },
-});
 
 export default HomeScreen;

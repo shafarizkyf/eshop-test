@@ -3,6 +3,7 @@ import {AppContext} from 'context/AppContext';
 import {navigationRef} from 'navigations/NavigationRef';
 import {useContext, useMemo} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
+import style from 'styles/style';
 
 const CategoriesSection = () => {
   const {categories} = useContext(AppContext);
@@ -13,7 +14,7 @@ const CategoriesSection = () => {
 
   return (
     <View style={styles.section}>
-      <Text style={styles.headerText}>Categories</Text>
+      <Text style={style.headerText}>Categories</Text>
       <View style={styles.grid}>
         {categoriesTrimmed.map(item => (
           <CategoryCard
@@ -32,10 +33,6 @@ const CategoriesSection = () => {
 const styles = StyleSheet.create({
   section: {
     gap: 18,
-  },
-  headerText: {
-    fontSize: 28,
-    fontWeight: 800,
   },
   grid: {
     flexDirection: 'row',
