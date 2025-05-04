@@ -48,7 +48,7 @@ const CartScreen = () => {
             title={item.title}
           />
         )}
-        contentContainerStyle={style.gap18}
+        contentContainerStyle={style.gap8}
         ListEmptyComponent={
           <View style={style.alignItemsCenter}>
             <LottieView

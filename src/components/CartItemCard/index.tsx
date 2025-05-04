@@ -2,6 +2,7 @@ import FastImage from '@d11/react-native-fast-image';
 import Icon from '@react-native-vector-icons/ionicons';
 import Checkbox from 'components/Checkbox';
 import useProduct from 'hooks/useProduct';
+import {navigationRef} from 'navigations/NavigationRef';
 import {useMemo, useState} from 'react';
 import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import color from 'styles/color';
@@ -59,7 +60,10 @@ const CartItemCard = (props: Props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      activeOpacity={0.8}
+      onPress={() => navigationRef.navigate('ProductDetailScreen', props)}>
       <View style={[style.row, style.gap18]}>
         <Checkbox
           checked={isChecked}
@@ -94,7 +98,7 @@ const CartItemCard = (props: Props) => {
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
