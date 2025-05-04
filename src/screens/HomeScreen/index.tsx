@@ -51,16 +51,16 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
 
   return (
     <View style={[style.flex1, style.gap18]}>
+      <View style={[style.row, style.gap18, style.mh20]}>
+        <SearchBar onChangeKeyword={onSearch} />
+        <CartIcon
+          counter={cart.length}
+          onPress={() => navigation.navigate('CartScreen')}
+        />
+      </View>
       <FlatList
         ListHeaderComponent={
           <View style={style.gap18}>
-            <View style={[style.row, style.gap18]}>
-              <SearchBar onChangeKeyword={onSearch} />
-              <CartIcon
-                counter={cart.length}
-                onPress={() => navigation.navigate('CartScreen')}
-              />
-            </View>
             <RenderIf isTrue={Boolean(categories.length)}>
               <CategoriesSection />
             </RenderIf>
