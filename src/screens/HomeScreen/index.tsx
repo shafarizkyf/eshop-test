@@ -2,57 +2,42 @@ import ProductCard from 'components/ProductCard';
 import {AppContext} from 'context/AppContext';
 import useProduct from 'hooks/useProduct';
 import {RootStackProps} from 'navigations/type';
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useMemo, useState} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {getProducts, searchProducts} from 'services/product';
 import style from 'styles/style';
-import {Products} from 'types/product';
 import CartIcon from './CartIcon';
 import CategoriesSection from './CategoriesSection';
 import SearchBar from './SearchBar';
 import {ShimmerPlaceholder} from 'components/ShimmerPlaceholder';
 import {CATEGORY_CARD_SIZE, PRODUCT_CARD_SIZE} from 'constant/card';
 import RenderIf from 'components/RenderIf';
-
-const INIT_PRODUCTS: Products = {
-  limit: 0,
-  products: [],
-  skip: 0,
-  total: 0,
-};
+import {useQuery} from '@tanstack/react-query';
 
 const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
   const {cart, categories, favorites} = useContext(AppContext);
   const {addToCart, toggleFavorite} = useProduct();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [keyword, setKeyword] = useState<string>('');
 
-  const [products, setProducts] = useState<Products>(INIT_PRODUCTS);
-  const [productsByKeyword, setProductsByKeyword] =
-    useState<Products>(INIT_PRODUCTS);
+  const productsQuery = useQuery({
+    queryKey: ['products'],
+    queryFn: () => getProducts({select: 'title,thumbnail,price'}),
+  });
 
-  const onSearch = async (keyword: string) => {
-    if (!keyword.length) {
-      setProductsByKeyword(INIT_PRODUCTS);
-      return;
-    }
+  const productsByKeywordQuery = useQuery({
+    enabled: !!keyword.length,
+    queryKey: ['products', keyword],
+    queryFn: () => searchProducts(keyword),
+  });
 
-    const _productsByKeyword = await searchProducts(keyword);
-    setProductsByKeyword(_productsByKeyword);
-  };
-
-  useEffect(() => {
-    setIsLoading(true);
-    getProducts({
-      select: 'title,thumbnail,price',
-    })
-      .then(setProducts)
-      .finally(() => setIsLoading(false));
-  }, []);
+  const isLoading = useMemo(() => {
+    return productsQuery.isLoading || productsByKeywordQuery.isLoading;
+  }, [productsQuery, productsByKeywordQuery]);
 
   return (
     <View style={[style.flex1, style.gap18, style.pt20]}>
       <View style={[style.row, style.gap18, style.mh20]}>
-        <SearchBar onChangeKeyword={onSearch} />
+        <SearchBar onChangeKeyword={setKeyword} />
         <CartIcon
           counter={cart.length}
           onPress={() => navigation.navigate('CartScreen')}
@@ -61,10 +46,7 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
       <FlatList
         ListHeaderComponent={
           <View style={style.gap18}>
-            <RenderIf
-              isTrue={
-                Boolean(categories.length) && !productsByKeyword.products.length
-              }>
+            <RenderIf isTrue={Boolean(categories.length) && !keyword}>
               <CategoriesSection />
             </RenderIf>
             <RenderIf isTrue={!categories.length}>
@@ -81,16 +63,16 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
                   ))}
               </View>
             </RenderIf>
-            <RenderIf isTrue={!productsByKeyword.products.length}>
+            <RenderIf isTrue={!keyword}>
               <Text style={style.headerText}>Products</Text>
             </RenderIf>
           </View>
         }
         keyExtractor={item => `Product-${item.id}`}
         data={
-          productsByKeyword.products.length
-            ? productsByKeyword.products
-            : products.products
+          productsByKeywordQuery.data
+            ? productsByKeywordQuery.data.products
+            : productsQuery.data?.products || []
         }
         renderItem={({item}) => (
           <ProductCard
