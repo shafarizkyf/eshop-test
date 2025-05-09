@@ -6,6 +6,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {SheetProvider} from 'react-native-actions-sheet';
 import 'components/ActionSheet/sheets';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
+import ComposeProviders from 'components/ComposeProvider';
 
 const queryClient = new QueryClient();
 
@@ -13,13 +14,11 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <QueryClientProvider client={queryClient}>
-        <AppContext>
-          <SheetProvider>
-            <NavigationContainer ref={navigationRef}>
-              <RootNavigation />
-            </NavigationContainer>
-          </SheetProvider>
-        </AppContext>
+        <ComposeProviders components={[AppContext, SheetProvider]}>
+          <NavigationContainer ref={navigationRef}>
+            <RootNavigation />
+          </NavigationContainer>
+        </ComposeProviders>
       </QueryClientProvider>
     </SafeAreaProvider>
   );
