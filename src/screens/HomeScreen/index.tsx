@@ -3,7 +3,7 @@ import {AppContext} from 'context/AppContext';
 import useProduct from 'hooks/useProduct';
 import {RootStackProps} from 'navigations/type';
 import {useContext, useMemo, useState} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {FlatList, RefreshControl, StyleSheet, Text, View} from 'react-native';
 import {getProducts, searchProducts} from 'services/product';
 import style from 'styles/style';
 import CartIcon from './CartIcon';
@@ -13,6 +13,8 @@ import {ShimmerPlaceholder} from 'components/ShimmerPlaceholder';
 import {CATEGORY_CARD_SIZE, PRODUCT_CARD_SIZE} from 'constant/card';
 import RenderIf from 'components/RenderIf';
 import {useQuery} from '@tanstack/react-query';
+import {useRefreshByUser} from 'hooks/useRefreshByUser';
+import {useRefreshOnFocus} from 'hooks/useRefreshOnFocus';
 
 const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
   const {cart, categories, favorites} = useContext(AppContext);
@@ -29,6 +31,12 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
     queryKey: ['products', keyword],
     queryFn: () => searchProducts(keyword),
   });
+
+  const {isRefetchingByUser, refetchByUser} = useRefreshByUser(
+    productsQuery.refetch,
+  );
+
+  useRefreshOnFocus(productsQuery.refetch);
 
   const isLoading = useMemo(() => {
     return productsQuery.isLoading || productsByKeywordQuery.isLoading;
@@ -103,6 +111,12 @@ const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
         numColumns={2}
         contentContainerStyle={style.gap8}
         style={style.ph20}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefetchingByUser}
+            onRefresh={refetchByUser}
+          />
+        }
       />
     </View>
   );

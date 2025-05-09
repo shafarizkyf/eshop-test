@@ -48,7 +48,6 @@ export default ({children}: PropsWithChildren) => {
     // auto refetch on reconnect
     onlineManager.setEventListener(setOnline => {
       const networkSubscription = Network.addNetworkStateListener(state => {
-        console.log(state);
         setOnline(!!state.isConnected);
       });
 
