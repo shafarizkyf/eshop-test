@@ -7,14 +7,14 @@ import ProductDetailHeader from 'components/ProductDetailHeader';
 import {AppContext} from 'context/AppContext';
 import useProduct from 'hooks/useProduct';
 import {RootStackProps} from 'navigations/type';
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import {getProductById} from 'services/product';
 import color from 'styles/color';
 import style from 'styles/style';
-import {Product} from 'types/product';
 import {colorAlpha} from 'utils/color';
 import ReviewCard from './ReviewCard';
+import {useQuery} from '@tanstack/react-query';
 
 const ProductDetailScreen = ({
   route,
@@ -25,7 +25,10 @@ const ProductDetailScreen = ({
   const {favorites} = useContext(AppContext);
   const {addToCart, toggleFavorite} = useProduct();
 
-  const [product, setProduct] = useState<Product>();
+  const {data: product} = useQuery({
+    queryKey: ['product', id],
+    queryFn: () => getProductById(id),
+  });
 
   const renderProductDetailHeader = (props: StackHeaderProps) => (
     <ProductDetailHeader
@@ -34,10 +37,6 @@ const ProductDetailScreen = ({
       isFavorite={favorites.find(f => f.id === id) !== undefined}
     />
   );
-
-  useEffect(() => {
-    getProductById(id).then(setProduct);
-  }, [id]);
 
   useEffect(() => {
     navigation.setOptions({

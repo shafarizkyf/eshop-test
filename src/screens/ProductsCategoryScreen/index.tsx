@@ -1,4 +1,5 @@
 import Icon from '@react-native-vector-icons/ionicons';
+import {useQuery} from '@tanstack/react-query';
 import ProductCard from 'components/ProductCard';
 import RenderIf from 'components/RenderIf';
 import {ShimmerPlaceholder} from 'components/ShimmerPlaceholder';
@@ -6,11 +7,10 @@ import {PRODUCT_CARD_SIZE} from 'constant/card';
 import {AppContext} from 'context/AppContext';
 import useProduct from 'hooks/useProduct';
 import {RootStackProps} from 'navigations/type';
-import {useContext, useEffect, useState} from 'react';
+import {useContext} from 'react';
 import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {getProductsByCategory} from 'services/product';
 import style from 'styles/style';
-import {Products} from 'types/product';
 
 const ProductsCategoryScreen = ({
   route,
@@ -19,26 +19,16 @@ const ProductsCategoryScreen = ({
   const {category} = route.params;
   const {favorites} = useContext(AppContext);
   const {addToCart, toggleFavorite} = useProduct();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [products, setProducts] = useState<Products>({
-    limit: 0,
-    products: [],
-    skip: 0,
-    total: 0,
+  const {data: products, isLoading} = useQuery({
+    queryKey: ['products', category.slug],
+    queryFn: () => getProductsByCategory(category.slug),
   });
-
-  useEffect(() => {
-    setIsLoading(true);
-    getProductsByCategory(category.slug)
-      .then(setProducts)
-      .finally(() => setIsLoading(false));
-  }, [category.slug]);
 
   return (
     <View style={[style.flex1]}>
       <FlatList
-        data={products.products}
+        data={products?.products || []}
         keyExtractor={item => item.id + item.title}
         ListHeaderComponent={
           <View style={[style.rowBetweenInCenter]}>

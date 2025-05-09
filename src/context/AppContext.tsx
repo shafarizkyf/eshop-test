@@ -1,3 +1,4 @@
+import {useQuery} from '@tanstack/react-query';
 import {createContext, PropsWithChildren, useEffect, useState} from 'react';
 import {getProductCategories} from 'services/product';
 import {Cart} from 'types/app';
@@ -21,13 +22,15 @@ export const AppContext = createContext<AppContextProps>({
 });
 
 export default ({children}: PropsWithChildren) => {
-  const [categories, setCategories] = useState<Category[]>([]);
   const [favorites, setFavorites] = useState<ProductSimple[]>([]);
   const [cart, setCart] = useState<Cart[]>([]);
 
-  useEffect(() => {
-    getProductCategories().then(setCategories);
+  const categoriesQuery = useQuery({
+    queryKey: ['categories'],
+    queryFn: getProductCategories,
+  });
 
+  useEffect(() => {
     // get saved favorite products
     const _favorites = retrieveObject<ProductSimple[]>('FAVORITE_PRODUCTS');
     if (_favorites) {
@@ -43,7 +46,13 @@ export default ({children}: PropsWithChildren) => {
 
   return (
     <AppContext.Provider
-      value={{categories, cart, setCart, favorites, setFavorites}}>
+      value={{
+        categories: categoriesQuery.data || [],
+        cart,
+        setCart,
+        favorites: favorites,
+        setFavorites,
+      }}>
       {children}
     </AppContext.Provider>
   );
