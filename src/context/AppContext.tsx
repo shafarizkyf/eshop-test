@@ -1,9 +1,11 @@
-import {useQuery} from '@tanstack/react-query';
+import {focusManager, onlineManager, useQuery} from '@tanstack/react-query';
 import {createContext, PropsWithChildren, useEffect, useState} from 'react';
 import {getProductCategories} from 'services/product';
 import {Cart} from 'types/app';
 import {Category, ProductSimple} from 'types/product';
 import {retrieveObject} from 'utils/storage';
+import * as Network from 'expo-network';
+import {AppState, AppStateStatus} from 'react-native';
 
 export type AppContextProps = {
   categories: Category[];
@@ -42,6 +44,28 @@ export default ({children}: PropsWithChildren) => {
     if (_cart) {
       setCart(_cart);
     }
+
+    // auto refetch on reconnect
+    onlineManager.setEventListener(setOnline => {
+      const networkSubscription = Network.addNetworkStateListener(state => {
+        console.log(state);
+        setOnline(!!state.isConnected);
+      });
+
+      return networkSubscription.remove;
+    });
+
+    // refetch on app focus
+    const appStateSubscription = AppState.addEventListener(
+      'change',
+      (status: AppStateStatus) => {
+        focusManager.setFocused(status === 'active');
+      },
+    );
+
+    return () => {
+      appStateSubscription.remove();
+    };
   }, []);
 
   return (
