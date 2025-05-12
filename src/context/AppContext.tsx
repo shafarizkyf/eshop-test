@@ -8,6 +8,7 @@ import * as Network from 'expo-network';
 import {useAppState} from 'hooks/useAppState';
 import {Session} from '@supabase/supabase-js';
 import {supabase} from 'services/supabase';
+import cartService from 'services/cart';
 
 export type AppContextProps = {
   categories: Category[];
@@ -33,6 +34,13 @@ export default ({children}: PropsWithChildren) => {
   const [favorites, setFavorites] = useState<ProductSimple[]>([]);
   const [cart, setCart] = useState<Cart[]>([]);
   const [session, setSession] = useState<Session | null>(null);
+
+  const cartQuery = useQuery({
+    queryKey: ['cart'],
+    queryFn: cartService.getCart,
+  });
+
+  console.log('cartQuery: ', cartQuery.data);
 
   const categoriesQuery = useQuery({
     queryKey: ['categories'],

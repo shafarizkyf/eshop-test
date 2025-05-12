@@ -15,10 +15,12 @@ import RenderIf from 'components/RenderIf';
 import {useQuery} from '@tanstack/react-query';
 import {useRefreshByUser} from 'hooks/useRefreshByUser';
 import {useRefreshOnFocus} from 'hooks/useRefreshOnFocus';
+import useCart from 'hooks/useCart';
 
 const HomeScreen = ({navigation}: HomeTabProps<'HomeScreen'>) => {
   const {cart, categories, favorites} = useContext(AppContext);
-  const {addToCart, toggleFavorite} = useProduct();
+  const {addToCartMutation} = useCart();
+  const {toggleFavorite} = useProduct();
   const [keyword, setKeyword] = useState<string>('');
 
   const productsQuery = useQuery({
@@ -86,7 +88,12 @@ const HomeScreen = ({navigation}: HomeTabProps<'HomeScreen'>) => {
           <ProductCard
             text={item.title}
             thumbnail={item.thumbnail}
-            onAddToCart={() => addToCart(item)}
+            onAddToCart={() =>
+              addToCartMutation.mutate({
+                product_id: item.id,
+                quantity: 1,
+              })
+            }
             onToggleFavorite={() => toggleFavorite(item)}
             isFavorite={favorites.find(f => f.id === item.id) !== undefined}
             onPress={() => navigation.navigate('ProductDetailScreen', item)}
