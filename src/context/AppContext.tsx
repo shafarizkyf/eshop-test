@@ -6,6 +6,8 @@ import {Category, ProductSimple} from 'types/product';
 import {retrieveObject} from 'utils/storage';
 import * as Network from 'expo-network';
 import {useAppState} from 'hooks/useAppState';
+import {Session} from '@supabase/supabase-js';
+import {supabase} from 'services/supabase';
 
 export type AppContextProps = {
   categories: Category[];
@@ -13,6 +15,8 @@ export type AppContextProps = {
   setCart: (value: Cart[]) => void;
   favorites: ProductSimple[];
   setFavorites: (value: ProductSimple[]) => void;
+  session: Session | null;
+  setSession: (value: Session | null) => void;
 };
 
 export const AppContext = createContext<AppContextProps>({
@@ -21,20 +25,33 @@ export const AppContext = createContext<AppContextProps>({
   setCart: () => null,
   favorites: [],
   setFavorites: () => null,
+  session: null,
+  setSession: () => null,
 });
 
 export default ({children}: PropsWithChildren) => {
   const [favorites, setFavorites] = useState<ProductSimple[]>([]);
   const [cart, setCart] = useState<Cart[]>([]);
+  const [session, setSession] = useState<Session | null>(null);
 
   const categoriesQuery = useQuery({
     queryKey: ['categories'],
     queryFn: getProductCategories,
   });
 
-  // refetch on app focus
   useAppState(status => {
+    // refetch on app focus
     focusManager.setFocused(status === 'active');
+
+    // Tells Supabase Auth to continuously refresh the session automatically if
+    // the app is in the foreground. When this is added, you will continue to receive
+    // `onAuthStateChange` events with the `TOKEN_REFRESHED` or `SIGNED_OUT` event
+    // if the user's session is terminated. This should only be registered once.
+    if (status === 'active') {
+      supabase.auth.startAutoRefresh();
+    } else {
+      supabase.auth.stopAutoRefresh();
+    }
   });
 
   useEffect(() => {
@@ -49,6 +66,14 @@ export default ({children}: PropsWithChildren) => {
     if (_cart) {
       setCart(_cart);
     }
+
+    supabase.auth.getSession().then(response => {
+      setSession(response.data.session);
+    });
+
+    supabase.auth.onAuthStateChange((_event, respoonse) => {
+      setSession(respoonse);
+    });
 
     // auto refetch on reconnect
     onlineManager.setEventListener(setOnline => {
@@ -68,6 +93,8 @@ export default ({children}: PropsWithChildren) => {
         setCart,
         favorites: favorites,
         setFavorites,
+        session,
+        setSession,
       }}>
       {children}
     </AppContext.Provider>

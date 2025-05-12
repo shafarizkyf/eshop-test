@@ -1,7 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 import AppContext from 'context/AppContext';
 import {navigationRef} from 'navigations/NavigationRef';
-import RootNavigation from 'navigations/RootNavigation';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {SheetProvider} from 'react-native-actions-sheet';
 import 'components/ActionSheet/sheets';
@@ -10,12 +9,12 @@ import {PersistQueryClientProvider} from '@tanstack/react-query-persist-client';
 import {createAsyncStoragePersister} from '@tanstack/query-async-storage-persister';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ComposeProviders from 'components/ComposeProvider';
+import RootNavigation from 'navigations/RootNavigation';
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       gcTime: 1000 * 60 * 60 * 24, // 24 hours,
-      staleTime: 1000 * 60 * 5,
     },
   },
 });

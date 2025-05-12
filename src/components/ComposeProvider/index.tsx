@@ -8,7 +8,6 @@ type ComposeProvidersProps = PropsWithChildren & {
 
 function ComposeProviders(props: ComposeProvidersProps): ReactNode {
   return props.components.reduceRight((memo, Component) => {
-    console.log(Component);
     return <Component>{memo}</Component>;
   }, props.children);
 }
