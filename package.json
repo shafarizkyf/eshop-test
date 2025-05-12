@@ -11,11 +11,13 @@
   },
   "dependencies": {
     "@d11/react-native-fast-image": "^8.9.2",
+    "@react-native-async-storage/async-storage": "2.1.2",
     "@react-native-masked-view/masked-view": "^0.3.2",
     "@react-native-vector-icons/common": "^11.0.0",
     "@react-native-vector-icons/ionicons": "^7.4.0",
     "@react-navigation/native": "^7.1.7",
     "@react-navigation/stack": "^7.3.0",
+    "@supabase/supabase-js": "^2.49.4",
     "@tanstack/query-async-storage-persister": "^5.75.5",
     "@tanstack/react-query": "^5.75.5",
     "@tanstack/react-query-persist-client": "^5.75.5",
@@ -34,7 +36,7 @@
     "react-native-safe-area-context": "^5.4.0",
     "react-native-screens": "^4.10.0",
     "react-native-simple-toast": "^3.3.2",
-    "@react-native-async-storage/async-storage": "2.1.2"
+    "react-native-url-polyfill": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -55,6 +57,7 @@
     "eslint": "^8.19.0",
     "jest": "^29.6.3",
     "prettier": "2.8.8",
+    "react-native-dotenv": "^3.4.11",
     "react-test-renderer": "19.0.0",
     "typescript": "5.0.4"
   },
