@@ -5,7 +5,7 @@ import {Cart} from 'types/app';
 import {Category, ProductSimple} from 'types/product';
 import {retrieveObject} from 'utils/storage';
 import * as Network from 'expo-network';
-import {AppState, AppStateStatus} from 'react-native';
+import {useAppState} from 'hooks/useAppState';
 
 export type AppContextProps = {
   categories: Category[];
@@ -32,6 +32,11 @@ export default ({children}: PropsWithChildren) => {
     queryFn: getProductCategories,
   });
 
+  // refetch on app focus
+  useAppState(status => {
+    focusManager.setFocused(status === 'active');
+  });
+
   useEffect(() => {
     // get saved favorite products
     const _favorites = retrieveObject<ProductSimple[]>('FAVORITE_PRODUCTS');
@@ -53,18 +58,6 @@ export default ({children}: PropsWithChildren) => {
 
       return networkSubscription.remove;
     });
-
-    // refetch on app focus
-    const appStateSubscription = AppState.addEventListener(
-      'change',
-      (status: AppStateStatus) => {
-        focusManager.setFocused(status === 'active');
-      },
-    );
-
-    return () => {
-      appStateSubscription.remove();
-    };
   }, []);
 
   return (
