@@ -1,7 +1,7 @@
 import ProductCard from 'components/ProductCard';
 import {AppContext} from 'context/AppContext';
 import useProduct from 'hooks/useProduct';
-import {RootStackProps} from 'navigations/type';
+import {HomeTabProps} from 'navigations/type';
 import {useContext, useMemo, useState} from 'react';
 import {FlatList, RefreshControl, StyleSheet, Text, View} from 'react-native';
 import {getProducts, searchProducts} from 'services/product';
@@ -16,7 +16,7 @@ import {useQuery} from '@tanstack/react-query';
 import {useRefreshByUser} from 'hooks/useRefreshByUser';
 import {useRefreshOnFocus} from 'hooks/useRefreshOnFocus';
 
-const HomeScreen = ({navigation}: RootStackProps<'HomeScreen'>) => {
+const HomeScreen = ({navigation}: HomeTabProps<'HomeScreen'>) => {
   const {cart, categories, favorites} = useContext(AppContext);
   const {addToCart, toggleFavorite} = useProduct();
   const [keyword, setKeyword] = useState<string>('');
