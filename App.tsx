@@ -10,6 +10,7 @@ import {createAsyncStoragePersister} from '@tanstack/query-async-storage-persist
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ComposeProviders from 'components/ComposeProvider';
 import RootNavigation from 'navigations/RootNavigation';
+import PicksScreen from 'screens/PicksScreen';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,9 +31,10 @@ const App = () => {
         client={queryClient}
         persistOptions={{persister: asyncStoragePersister}}>
         <ComposeProviders components={[AppContext, SheetProvider]}>
-          <NavigationContainer ref={navigationRef}>
+          <PicksScreen />
+          {/* <NavigationContainer ref={navigationRef}>
             <RootNavigation />
-          </NavigationContainer>
+          </NavigationContainer> */}
         </ComposeProviders>
       </PersistQueryClientProvider>
     </SafeAreaProvider>

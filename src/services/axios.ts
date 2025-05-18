@@ -4,6 +4,10 @@ export const eshopApi = axios.create({
   baseURL: 'https://dummyjson.com',
 });
 
+export const pickzApi = axios.create({
+  baseURL: 'https://pickz.co/api',
+});
+
 eshopApi.interceptors.response.use(
   response => {
     return response;
